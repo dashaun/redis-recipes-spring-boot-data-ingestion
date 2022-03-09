@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  concourse-db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
