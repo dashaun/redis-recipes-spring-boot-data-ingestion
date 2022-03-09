@@ -2,8 +2,9 @@ package dev.dashaun.service.retailStore.controller;
 
 import dev.dashaun.service.retailStore.domain.StoreJPA;
 import dev.dashaun.service.retailStore.domain.StoreRedis;
+import dev.dashaun.service.retailStore.repository.StoreJPARepository;
+import dev.dashaun.service.retailStore.repository.StoreRedisRepository;
 import dev.dashaun.service.retailStore.util.CSVLoader;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,11 +13,11 @@ import java.util.Optional;
 
 @RestController
 public class RetailStoreController {
-    private final CrudRepository<StoreRedis, String> redisRepository;
-    private final CrudRepository<StoreJPA, String> jpaRepository;
+    private final StoreRedisRepository redisRepository;
+    private final StoreJPARepository jpaRepository;
 
-    public RetailStoreController(CrudRepository<StoreRedis, String> redis,
-                                 CrudRepository<StoreJPA, String> jpa){
+    public RetailStoreController(StoreRedisRepository redis,
+                                 StoreJPARepository jpa){
         this.redisRepository = redis;
         this.jpaRepository = jpa;
     }

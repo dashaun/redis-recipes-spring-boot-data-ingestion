@@ -1,29 +1,32 @@
 package dev.dashaun.service.retailStore.util;
 
+import de.siegmar.fastcsv.reader.NamedCsvReader;
+import de.siegmar.fastcsv.reader.NamedCsvRow;
 import dev.dashaun.service.retailStore.domain.StoreJPA;
 import dev.dashaun.service.retailStore.domain.StoreRedis;
-import de.siegmar.fastcsv.reader.CsvContainer;
-import de.siegmar.fastcsv.reader.CsvReader;
-import de.siegmar.fastcsv.reader.CsvRow;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class CSVLoader {
 
+    public static List<NamedCsvRow> readDataIntoRows() throws IOException {
+        File file = ResourceUtils.getFile("classpath:Retail_Food_Stores.csv");
+        NamedCsvReader csvReader = NamedCsvReader.builder().build(new FileReader(file));
+        return csvReader.stream().collect(Collectors.toList());
+    }
 
     public static void redis(CrudRepository<StoreRedis, String> repository) {
         try {
-            File file = ResourceUtils.getFile("classpath:Retail_Food_Stores.csv");
-            CsvReader csvReader = new CsvReader();
-            csvReader.setContainsHeader(true);
-            CsvContainer csv = csvReader.read(file, StandardCharsets.UTF_8);
-            for (CsvRow row : csv.getRows()) {
+            List<NamedCsvRow> data = readDataIntoRows();
+            for (NamedCsvRow row : data) {
                 repository.save(convertToRedis(row));
             }
         } catch (IOException ioe) {
@@ -33,11 +36,8 @@ public class CSVLoader {
 
     public static void jpa(CrudRepository<StoreJPA, String> repository) {
         try {
-            File file = ResourceUtils.getFile("classpath:Retail_Food_Stores.csv");
-            CsvReader csvReader = new CsvReader();
-            csvReader.setContainsHeader(true);
-            CsvContainer csv = csvReader.read(file, StandardCharsets.UTF_8);
-            for (CsvRow row : csv.getRows()) {
+            List<NamedCsvRow> data = readDataIntoRows();
+            for (NamedCsvRow row : data) {
                 repository.save(convertToJPA(row));
             }
         } catch (IOException ioe) {
@@ -45,43 +45,43 @@ public class CSVLoader {
         }
     }
 
-    public static StoreRedis convertToRedis(CsvRow row) {
+    public static StoreRedis convertToRedis(NamedCsvRow row) {
         return StoreRedis.builder()
-                .County(row.getField(0))
-                .License_Number(row.getField(1))
-                .Operation_Type(row.getField(2))
-                .Establishment_Type(row.getField(2))
-                .Entity_Name(row.getField(2))
-                .DBA_Name(row.getField(2))
-                .Street_Number(row.getField(2))
-                .Street_Name(row.getField(2))
-                .Address_Line_2(row.getField(2))
-                .Address_Line_3(row.getField(2))
-                .City(row.getField(2))
-                .State(row.getField(2))
-                .Zip_Code(row.getField(2))
-                .Square_Footage(row.getField(2))
-                .Location(row.getField(2))
+                .County(row.getField("County"))
+                .License_Number(row.getField("License Number"))
+                .Operation_Type(row.getField("Operation Type"))
+                .Establishment_Type(row.getField("Establishment Type"))
+                .Entity_Name(row.getField("Entity Name"))
+                .DBA_Name(row.getField("DBA Name"))
+                .Street_Number(row.getField("Street Number"))
+                .Street_Name(row.getField("Street Name"))
+                .Address_Line_2(row.getField("Address Line 2"))
+                .Address_Line_3(row.getField("Address Line 3"))
+                .City(row.getField("City"))
+                .State(row.getField("State"))
+                .Zip_Code(row.getField("Zip Code"))
+                .Square_Footage(row.getField("Square Footage"))
+                .Location(row.getField("Location"))
                 .build();
     }
 
-    public static StoreJPA convertToJPA(CsvRow row) {
+    public static StoreJPA convertToJPA(NamedCsvRow row) {
         return StoreJPA.builder()
-                .County(row.getField(0))
-                .License_Number(row.getField(1))
-                .Operation_Type(row.getField(2))
-                .Establishment_Type(row.getField(2))
-                .Entity_Name(row.getField(2))
-                .DBA_Name(row.getField(2))
-                .Street_Number(row.getField(2))
-                .Street_Name(row.getField(2))
-                .Address_Line_2(row.getField(2))
-                .Address_Line_3(row.getField(2))
-                .City(row.getField(2))
-                .State(row.getField(2))
-                .Zip_Code(row.getField(2))
-                .Square_Footage(row.getField(2))
-                .Location(row.getField(2))
+                .County(row.getField("County"))
+                .License_Number(row.getField("License Number"))
+                .Operation_Type(row.getField("Operation Type"))
+                .Establishment_Type(row.getField("Establishment Type"))
+                .Entity_Name(row.getField("Entity Name"))
+                .DBA_Name(row.getField("DBA Name"))
+                .Street_Number(row.getField("Street Number"))
+                .Street_Name(row.getField("Street Name"))
+                .Address_Line_2(row.getField("Address Line 2"))
+                .Address_Line_3(row.getField("Address Line 3"))
+                .City(row.getField("City"))
+                .State(row.getField("State"))
+                .Zip_Code(row.getField("Zip Code"))
+                .Square_Footage(row.getField("Square Footage"))
+                .Location(row.getField("Location"))
                 .build();
     }
 }

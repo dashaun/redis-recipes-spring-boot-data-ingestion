@@ -19,10 +19,10 @@ class ApplicationTests {
 
 	static {
 		redis = new GenericContainer<>(
-				DockerImageName.parse("redis:6-alpine"))
+				DockerImageName.parse("redis:latest"))
 				.withExposedPorts(6379);
 		postgres = new GenericContainer<>(
-				DockerImageName.parse("postgres:13-alpine"))
+				DockerImageName.parse("postgres:latest"))
 				.withExposedPorts(5432)
 				.withEnv("POSTGRES_PASSWORD", "postgres");
 	}

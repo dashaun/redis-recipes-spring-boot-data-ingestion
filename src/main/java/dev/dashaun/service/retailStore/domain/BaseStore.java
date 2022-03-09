@@ -1,13 +1,14 @@
 package dev.dashaun.service.retailStore.domain;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-@NoArgsConstructor
 public class BaseStore {
+    public BaseStore() {
+    }
+
     private String County;
     private String Operation_Type;
     private String Establishment_Type;
