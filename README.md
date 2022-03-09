@@ -11,3 +11,9 @@ The Docker Compose file provides running instances of both Postgres & Redis
 docker-compose up -d
 ./mvnw spring-boot:run
 ```
+
+## Create an image of the application
+
+```text
+./mvnw spring-boot:build-image -DskipTests
+```
