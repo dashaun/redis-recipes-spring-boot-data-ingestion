@@ -5,25 +5,30 @@ import de.siegmar.fastcsv.reader.NamedCsvRow;
 import dev.dashaun.service.retailStore.domain.StoreJPA;
 import dev.dashaun.service.retailStore.domain.StoreRedis;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class CSVLoader {
-
-    public static List<NamedCsvRow> readDataIntoRows() throws IOException {
-        File file = ResourceUtils.getFile("classpath:Retail_Food_Stores.csv");
-        NamedCsvReader csvReader = NamedCsvReader.builder().build(new FileReader(file));
+    
+    private final Resource csv;
+    
+    public CSVLoader(Resource csv) {
+        this.csv = csv;
+    }
+    
+    public List<NamedCsvRow> readDataIntoRows() throws IOException {
+        NamedCsvReader csvReader = NamedCsvReader.builder().build(new InputStreamReader(csv.getInputStream()));
         return csvReader.stream().collect(Collectors.toList());
     }
 
-    public static void redis(CrudRepository<StoreRedis, String> repository) {
+    public void redis(CrudRepository<StoreRedis, String> repository) {
         try {
             List<NamedCsvRow> data = readDataIntoRows();
             for (NamedCsvRow row : data) {
@@ -34,7 +39,7 @@ public class CSVLoader {
         }
     }
 
-    public static void jpa(CrudRepository<StoreJPA, String> repository) {
+    public void jpa(CrudRepository<StoreJPA, String> repository) {
         try {
             List<NamedCsvRow> data = readDataIntoRows();
             for (NamedCsvRow row : data) {

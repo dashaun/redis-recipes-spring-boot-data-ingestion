@@ -2,8 +2,8 @@ package dev.dashaun.service.retailStore.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
