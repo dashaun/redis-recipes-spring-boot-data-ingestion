@@ -1,3 +1,6 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:13-alpine:///
+    url: jdbc:tc:postgresql:latest:///
+  threads:
+    virtual:
+      enabled: true

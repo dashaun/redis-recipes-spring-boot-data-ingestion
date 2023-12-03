@@ -23,3 +23,6 @@ spring:
   data.redis.host: localhost
   data.redis.password:
   data.redis.port: 6379
+  threads:
+    virtual:
+      enabled: true

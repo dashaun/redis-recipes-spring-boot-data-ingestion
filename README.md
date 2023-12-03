@@ -8,10 +8,8 @@ The Docker Compose file provides running instances of both Postgres & Redis
 ## Quick Start
 
 ```text
-docker-compose up -d
 ./mvnw clean package spring-boot:start -DskipTests
 time http :8080/load-jpa
 time http :8080/load-redis
 ./mvnw spring-boot:stop -Dspring-boot.stop.fork
-docker-compose down
 ```
