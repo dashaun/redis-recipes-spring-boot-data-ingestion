@@ -5,7 +5,6 @@ import de.siegmar.fastcsv.reader.NamedCsvRow;
 import dev.dashaun.service.retailStore.domain.StoreJPA;
 import dev.dashaun.service.retailStore.domain.StoreRedis;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.CrudRepository;
 
